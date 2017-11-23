@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Form Page</title>
+</head>
+<body>
+
+<h1>Form Page</h1>
+<hr>
+
+<form action = "/count_summa_of_numbers/" method = "POST">
+    {% csrf_token %}
+    A <input type = "text" name = 'a'>
+    <br>
+    <br>
+    B <input type = "text" name = 'b'>
+    <br>
+    <br>
+    <input type = "submit" value = "Получить сумму">
+</form>
+
+<br>
+<br>
+<hr>
+<br>
+<br>
+
+
+
+
+
+<p>Значение cookie</p>
+<input id = "tttt" type = "text">
+<button onclick = "setIt()">Задать значение</button>
+
+<br>
+<br>
+<button onclick = "deleteIt()">Удалить cookie</button>
+<br>
+<br>
+<button onclick = "getIt()">Получить значение cookie</button>
+
+<script>
+    "use strict";
+
+    function sendQueryToServer(query) {
+        let r = new XMLHttpRequest();
+        r.open("GET", query, true);
+        r.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
+        r.send(null);
+        r.onreadystatechange = function()
+        {
+            if(r.readyState === 4 && r.status === 200) {
+                alert(r.responseText + "");
+            }
+        }
+    }
+
+    function setIt() {
+        const value = document.getElementById("tttt").value.toString();
+        sendQueryToServer("/my_cookie_set?xxx=" + value);
+    }
+
+    function deleteIt() {
+        sendQueryToServer("/my_cookie_delete/");
+    }
+
+    function getIt() {
+        sendQueryToServer("/my_cookie_get/");
+    }
+</script>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<br>
+
+
+<h2>Регистрация пользователя</h2>
+<form method = "POST" action = "/reg_my_user/">
+    {% csrf_token %}
+    <p>Логин</p>
+    <input type = "text" name = "userLogin">
+    <p>Пароль</p>
+    <input type = "password" name = "userPassword">
+    <br>
+    <br>
+    <input type = "submit" value = "Зарегистрироваться">
+</form>
+
+
+
+<hr>
+<br>
+<br>
+<br>
+
+<h2>Вход в аккаунт</h2>
+<form method = "POST" action = "/go_to_account/">
+    {% csrf_token %}
+    <p>Логин</p>
+    <input type = "text" name = "loginOfUser">
+    <p>Пароль</p>
+    <input type = "password" name = "passwordOfUser">
+    <br>
+    <br>
+    <input type = "submit" value = "Войти в аккаунт">
+</form>
+
+<hr>
+<br>
+<br>
+<br>
+
+
+
+
+<button onclick="isAuthorized()">Авторизован ли я</button>
+
+<script>
+    function isAuthorized() {
+        const url = "/is_i_am_authorized";
+        let r = new XMLHttpRequest();
+        r.open("GET",url, true);
+        r.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
+        r.send(null);
+        r.onreadystatechange = function() {
+            if(r.readyState === 4 && r.status === 200) {
+                const answer = r.responseText;
+                r = null;
+                alert(answer);
+            }
+        }
+    }
+</script>
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<button onclick="exitFromAccount()">Выйти из аккаунта</button>
+
+<script>
+    function exitFromAccount() {
+        const url = "/exit_from_my_account";
+        let r = new XMLHttpRequest();
+        r.open("GET",url, true);
+        r.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
+        r.send(null);
+        r.onreadystatechange = function() {
+            if(r.readyState === 4 && r.status === 200) {
+                const answer = r.responseText;
+                r = null;
+                alert(answer);
+            }
+        }
+    }
+</script>
+
+
+
+<br>
+<br>
+<br>
+
+
+</body>
+</html>

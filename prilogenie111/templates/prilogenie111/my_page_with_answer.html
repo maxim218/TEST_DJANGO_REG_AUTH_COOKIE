@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Answer Page</title>
+</head>
+<body>
+
+<h1>Answer Page</h1>
+<hr>
+
+<h3 id = "myContent"></h3>
+
+<a href = "/my_page_with_form/">Вернуться</a>
+
+<script>
+    "use strict";
+
+    window.onload = function() {
+        const myContent = document.getElementById("myContent");
+        const mass = (window.location + "").split("/");
+        const answer = mass[mass.length - 1].toString();
+        myContent.innerHTML = answer;
+    }
+</script>
+
+</body>
+</html>
