@@ -97,3 +97,32 @@ def exit_from_my_account(request):
     if request.user.is_authenticated():
         logout(request)
     return HttpResponse("Вы вышли")
+
+
+from .models import Town
+from .models import Country
+
+def add_country(request):
+    country_name = str( request.POST['countryName'] )
+    Country.objects.create(country_name=country_name)
+    return HttpResponseRedirect("/my_page_with_form/" + "add_country_ok")
+
+def add_town(request):
+    town_name = str( request.POST['townName'] )
+    country_name = str( request.POST['countryName'] )
+
+    my_countries = Country.objects.filter(country_name=country_name)
+    if len(my_countries) == 0:
+        return HttpResponseRedirect("/my_page_with_form/" + "error_country_not_found")
+    else:
+        country = my_countries[0]
+        Town.objects.create(town_name=town_name, country=country)
+        return HttpResponseRedirect("/my_page_with_form/" + "add_town_ok")
+
+def print_pairs_town_and_country(request):
+    answer_string = ""
+    my_towns = Town.objects.order_by('pk')
+    for town in my_towns:
+        answer_string = answer_string + str(town.town_name) + "___" + str(town.country.country_name) + "<br>"
+    return HttpResponse(str(answer_string))
+

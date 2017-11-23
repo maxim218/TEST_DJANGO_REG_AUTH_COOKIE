@@ -6,6 +6,68 @@
 </head>
 <body>
 
+<br>
+<br>
+
+
+
+
+<form action = "/add_country/" method = "POST">
+    {% csrf_token %}
+    <label>Название страны</label>
+    <input type = "text" name = "countryName">
+    <input type = "submit" value = "Добавить страну">
+</form>
+
+<br>
+<br>
+
+<form action = "/add_town/" method = "POST">
+     {% csrf_token %}
+     <label>Название города</label>
+      <input type = "text" name = "townName">
+     <label>Название страны</label>
+     <input type = "text" name = "countryName">
+    <input type = "submit" value = "Добавить город">
+</form>
+
+
+<br>
+<br>
+
+<div id = "contentOfPairs"></div>
+
+<script>
+        let r = new XMLHttpRequest();
+        r.open("GET", "/print_pairs_town_and_country", true);
+        r.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
+        r.send(null);
+        r.onreadystatechange = function() {
+            if(r.readyState === 4 && r.status === 200) {
+                const answer = r.responseText + "";
+                r = null;
+                document.getElementById("contentOfPairs").innerHTML = answer;
+            }
+        }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+
 <h1>Form Page</h1>
 <hr>
 
@@ -19,14 +81,6 @@
     <br>
     <input type = "submit" value = "Получить сумму">
 </form>
-
-<br>
-<br>
-<hr>
-<br>
-<br>
-
-
 
 
 
